@@ -12,4 +12,5 @@ public interface ProductDAO {
     Product getById(int productId);
     Product getLatest();
     List<Product> search(String key);
+    int add(String name, String image, double price, String title, String description, int categoryId, int sellerId);
 }

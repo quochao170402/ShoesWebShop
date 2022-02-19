@@ -180,7 +180,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<Product> search( String key) {
+    public List<Product> search(String key) {
         String sql = "select * from product where name like ?\n";
         List<Product> list = new ArrayList<>();
         try {
@@ -203,5 +203,26 @@ public class ProductDAOImpl implements ProductDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public int add(String name, String image, double price, String title, String description, int categoryId, int sellerId) {
+        String sql = "insert into product(name,image,price,title,description,category_id,seller_id)\n" +
+                "values(?,?,?,?,?,?,?)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setDouble(3, price);
+            ps.setString(4, title);
+            ps.setString(5, description);
+            ps.setInt(6, categoryId);
+            ps.setInt(7, sellerId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

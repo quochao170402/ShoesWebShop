@@ -77,11 +77,11 @@
                     </td>
                     <td>${o.price} $</td>
                     <td>
-                        <a href="edit?id=${o.id}" class="edit" data-toggle="modal"><i
+                        <a href="/shop/manager/product/edit?id=${o.id}" class="edit" data-toggle="modal"><i
                                 class="material-icons"
                                 data-toggle="tooltip"
                                 title="Edit">&#xE254;</i></a>
-                        <a href="delete?id=${o.id}" class="delete" data-toggle="modal"><i
+                        <a href="/shop/manager/product/delete?id=${o.id}" class="delete" data-toggle="modal"><i
                                 class="material-icons"
                                 data-toggle="tooltip"
                                 title="Delete">&#xE872;</i></a>
@@ -90,25 +90,59 @@
             </c:forEach>
             </tbody>
         </table>
-        <div class="clearfix">
-            <div class="hint-text">Showing <b>5</b> out of <b>${listSize}</b> entries</div>
-            <ul class="pagination">
-                <li class="page-item ${index==1?'disabled':''}"><a href="/webshop/manager?index=${index-1}">Previous</a>
-                </li>
-                <c:forEach begin="1" end="${numberPage}" var="i">
-                    <li class="page-item ${index == i ? 'active':''}"><a href=/webshop/manager?index=${i}"
-                                                                         class="page-link">${i}</a></li>
-                </c:forEach>
-                <%--                <li class="page-item"><a href="#" class="page-link">1</a></li>--%>
-                <%--                <li class="page-item"><a href="#" class="page-link">2</a></li>--%>
-                <%--                <li class="page-item active"><a href="#" class="page-link">3</a></li>--%>
-                <%--                <li class="page-item"><a href="#" class="page-link">4</a></li>--%>
-                <%--                <li class="page-item"><a href="#" class="page-link">5</a></li>--%>
-                <li class="page-item"><a href="#" class="page-link">Next</a></li>
-            </ul>
-        </div>
+        <c:if test="${not empty pageSize}">
+            <div class="clearfix">
+                <div class="hint-text">Showing <b>${pageSize}</b> out of <b>${listSize}</b> entries</div>
+                <ul class="pagination">
+
+                    <c:choose>
+                        <c:when test="${numberPage == 1 || index ==1 }">
+                            <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a href="/shop/manager/product?index=${index - 1}" class="page-link">Previous</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:forEach begin="1" end="${numberPage}" var="i">
+                        <li class="page-item ${index == i ? 'active':''}">
+                            <a href=/shop/manager/product?index=${i}
+                               class="page-link">${i}</a>
+                        </li>
+                    </c:forEach>
+
+                    <c:choose>
+                        <c:when test="${numberPage == 1 || index == numberPage }">
+                            <li class="page-item disabled"><a href="#" class="page-link">Previous</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a href="/shop/manager/product?index=${index + 1}" class="page-link">Next</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+        </c:if>
+        <%--        <div class="clearfix">--%>
+        <%--            <div class="hint-text">Showing <b>5</b> out of <b>${listSize}</b> entries</div>--%>
+        <%--            <ul class="pagination">--%>
+        <%--                <li class="page-item ${index==1?'disabled':''}"><a href="/webshop/manager?index=${index-1}">Previous</a>--%>
+        <%--                </li>--%>
+        <%--                <c:forEach begin="1" end="${numberPage}" var="i">--%>
+        <%--                    <li class="page-item ${index == i ? 'active':''}"><a href=/webshop/manager?index=${i}"--%>
+        <%--                                                                         class="page-link">${i}</a></li>--%>
+        <%--                </c:forEach>--%>
+        <%--                &lt;%&ndash;                <li class="page-item"><a href="#" class="page-link">1</a></li>&ndash;%&gt;--%>
+        <%--                &lt;%&ndash;                <li class="page-item"><a href="#" class="page-link">2</a></li>&ndash;%&gt;--%>
+        <%--                &lt;%&ndash;                <li class="page-item active"><a href="#" class="page-link">3</a></li>&ndash;%&gt;--%>
+        <%--                &lt;%&ndash;                <li class="page-item"><a href="#" class="page-link">4</a></li>&ndash;%&gt;--%>
+        <%--                &lt;%&ndash;                <li class="page-item"><a href="#" class="page-link">5</a></li>&ndash;%&gt;--%>
+        <%--                <li class="page-item"><a href="#" class="page-link">Next</a></li>--%>
+        <%--            </ul>--%>
+        <%--        </div>--%>
     </div>
-    <a href="home">
+    <a href="/shop/home">
         <button type="button" class="btn btn-primary">Back to home</button>
     </a>
 </div>
@@ -116,7 +150,7 @@
 <div id="addProductModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="add" method="post">
+            <form action="/shop/manager/product/add" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Product</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -145,7 +179,7 @@
                     </div>
                     <div class="form-group">
                         <label>Category</label>
-                        <select name="category" class="form-select" aria-label="Default select example">
+                        <select name="categoryId" class="form-select" aria-label="Default select example">
                             <c:forEach items="${listCategory}" var="o">
                                 <option value="${o.id}">${o.name}</option>
                             </c:forEach>

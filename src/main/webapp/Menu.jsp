@@ -53,7 +53,6 @@
                 </div>
                 <a class="btn btn-success btn-sm ml-3" href="/shop/cart">
                     <i class="fa fa-shopping-cart"></i> Cart
-                    <span class="badge badge-light">3</span>
                 </a>
             </form>
         </div>
