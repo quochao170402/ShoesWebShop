@@ -225,4 +225,44 @@ public class ProductDAOImpl implements ProductDAO {
 
         return 0;
     }
+
+    @Override
+    public int update(int id,String name, String image, double price, String title, String description, int categoryId) {
+        String sql = "UPDATE `product`\n" +
+                "SET\n" +
+                "`name` = ?,\n" +
+                "`image` = ?,\n" +
+                "`price` = ?,\n" +
+                "`title` = ?,\n" +
+                "`description` = ?,\n" +
+                "`category_id` = ?\n" +
+                "where `id` = ?;";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setDouble(3, price);
+            ps.setString(4, title);
+            ps.setString(5, description);
+            ps.setInt(6, categoryId);
+            ps.setInt(7, id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    @Override
+    public int delete(int id) {
+        String sql = "delete from product where id = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

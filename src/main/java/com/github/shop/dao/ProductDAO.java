@@ -13,4 +13,6 @@ public interface ProductDAO {
     Product getLatest();
     List<Product> search(String key);
     int add(String name, String image, double price, String title, String description, int categoryId, int sellerId);
+    int update(int id,String name, String image, double price, String title, String description, int categoryId);
+    int delete(int id);
 }

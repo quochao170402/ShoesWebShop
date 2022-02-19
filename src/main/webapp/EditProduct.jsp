@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group">
                             <label>Category</label>
-                            <select name="category" class="form-select" aria-label="Default select example">
+                            <select name="categoryId" class="form-select" aria-label="Default select example">
                                 <c:forEach items="${listCategory}" var="o">
                                     <option value="${o.id}" ${product.categoryId eq o.id?'selected':''}>${o.name}</option>
                                 </c:forEach>
